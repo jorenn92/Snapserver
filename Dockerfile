@@ -33,7 +33,7 @@ RUN set -x && \
 	DEBIAN_FRONTEND=noninteractive apt-get clean -y && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y libfdk-aac1 libgio-cil && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y dbus libfdk-aac1 libasound2 libbluetooth3 libbsd0 libglib2.0-0 libsbc1 rsyslog  bluez bluez-tools && \
-	chmod +x /etc/spotify_takeover.sh /etc/bluetooth.sh
+	chmod +x /etc/spotify_takeover.sh /etc/bluetooth.sh /etc/snapclient.sh
 	
 # Snapserver, spotify & mopidy
 RUN set -x && \
