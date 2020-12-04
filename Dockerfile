@@ -10,6 +10,7 @@ EXPOSE 1704 1705 1780 6600 6680 5555/udp
 ENV BLUETOOTH=true
 COPY spotify_takeover.sh /etc/spotify_takeover.sh
 COPY bluetooth.sh /etc/bluetooth.sh
+COPY snapclient.sh /etc/snapclient.sh
 
 # Bluetooth
 RUN set -x && \
@@ -38,7 +39,7 @@ RUN set -x && \
 RUN set -x && \
     apt update -y && \
     apt upgrade -y && \
-    apt -f install -y python3.8 python3.8-dev python3-pip pkg-config gcc libffi-dev libcairo2-dev python3-cairo-dev libgirepository1.0-dev && \
+    apt -f install -y python3.8 python3.8-dev python3-pip snapclient pkg-config gcc libffi-dev libcairo2-dev python3-cairo-dev libgirepository1.0-dev && \
     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1 && \
     python3.8 -m pip install --ignore-installed PyGObject && \
     apt -f install -y curl wget libavahi-client3 libavahi-common3 libflac8 libogg0 libopus0 libvorbis0a libvorbisenc2 && \
