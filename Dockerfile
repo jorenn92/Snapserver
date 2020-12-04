@@ -8,10 +8,6 @@ LABEL   Description="Snapcast server with Audio delivered by Bluetooth, Spotify 
 EXPOSE 1704 1705 1780 6600 6680 5555/udp
 
 ENV BLUETOOTH=true
-COPY supervisord.conf /etc/supervisord.conf
-COPY spotifyd.conf /etc/spotifyd.conf
-COPY asound.conf /etc/asound.conf
-COPY mopidy.conf /root/.config/mopidy/mopidy.conf
 COPY spotify_takeover.sh /etc/spotify_takeover.sh
 COPY bluetooth.sh /etc/bluetooth.sh
 
@@ -62,5 +58,10 @@ RUN set -x && \
     apt -y remove python3.8-dev pkg-config gcc libffi-dev python3-cairo-dev wget && \
     apt -y autoremove
 
+COPY supervisord.conf /etc/supervisord.conf
+COPY spotifyd.conf /etc/spotifyd.conf
+COPY asound.conf /etc/asound.conf
+COPY mopidy.conf /root/.config/mopidy/mopidy.conf
 COPY bluetooth_main.conf /etc/bluetooth/main.conf
+
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
