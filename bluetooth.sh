@@ -8,7 +8,7 @@ if [[ $BLUETOOTH == "true" ]]; then
 	fi
 	/etc/init.d/bluetooth start && /usr/bin/dbus-daemon --system 
 	/usr/lib/bluetooth/bluetoothd &
-	/usr/bin/bluealsa -i hci0 -p a2dp-sink > /dev/null 2>&1 &
+	/usr/bin/bluealsa -i hci0 -p a2dp-sink -p a2dp-source > /dev/null 2>&1 &
 	
 	bluetoothctl power on
 	bluetoothctl agent on
