@@ -5,7 +5,7 @@ if [[ ! -z $BLUETOOTH_CLIENT ]]; then
 	if [[ $(cat /etc/alsa/conf.d/20-bluealsa.conf | grep -i 'defaults.bluealsa.device ') == "" ]]; then
 		echo "defaults.bluealsa.device \"$BLUETOOTH_CLIENT\"" >> /etc/alsa/conf.d/20-bluealsa.conf
 	else
-		sed -i 's/^defaults.bluealsa.device \".*/defaults.bluealsa.device \"$BLUETOOTH_CLIENT\"/' /etc/alsa/conf.d/20-bluealsa.conf
+		sed -i "s/^defaults.bluealsa.device \".*/defaults.bluealsa.device \"${BLUETOOTH_CLIENT}\"/" /etc/alsa/conf.d/20-bluealsa.conf
 	fi
 
 	bluetoothctl power on
