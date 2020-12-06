@@ -35,7 +35,7 @@ RUN set -x && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y dbus libfdk-aac1 libasound2 libbluetooth3 libbsd0 libglib2.0-0 libsbc1 rsyslog  bluez bluez-tools && \
 	chmod +x /etc/spotify_takeover.sh /etc/bluetooth.sh /etc/snapclient.sh
 	
-# Snapserver, spotify & mopidy
+# Snapserver, spotify, mopidy & api
 RUN set -x && \
     apt update -y && \
     apt upgrade -y && \
@@ -58,12 +58,10 @@ RUN set -x && \
     tar -zxvf spotifyd-linux-slim.tar.gz && \
 	mkdir /opt/api && \
 	cd /opt/api && \
-	pip3 install flask && \
     apt -y remove python3.8-dev pkg-config gcc libffi-dev python3-cairo-dev wget && \
-    apt -y autoremove
-	
-	
-	
+    apt -y autoremove && \
+	pip3 install flask && \
+	chmod +x /opt/api/*
 
 COPY supervisord.conf /etc/supervisord.conf
 COPY spotifyd.conf /etc/spotifyd.conf
