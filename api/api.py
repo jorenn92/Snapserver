@@ -10,7 +10,7 @@ app.config["DEBUG"] = False
 def bluetooth_connect():
     if 'mac' in request.args:
             os.environ["BLUETOOTH_CLIENT"] = str(request.args['mac'])
-            os.system("./bluetooth_connect.sh &")
+            os.system("/opt/api/bluetooth_connect.sh &")
             return "success"
     else:
             return "Error: No mac field provided. Please specify a bluetooth mac address."
