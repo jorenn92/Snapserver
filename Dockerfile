@@ -33,7 +33,10 @@ RUN set -x && \
 	DEBIAN_FRONTEND=noninteractive apt-get clean -y && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y libfdk-aac1 libgio-cil && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y dbus libfdk-aac1 libasound2 libbluetooth3 libbsd0 libglib2.0-0 libsbc1 rsyslog  bluez bluez-tools && \
-	chmod +x /etc/spotify_takeover.sh /etc/bluetooth.sh /etc/snapclient.sh
+	chmod +x /etc/spotify_takeover.sh /etc/bluetooth.sh /etc/snapclient.sh && \
+	mkdir /opt/api && \
+	cd /opt/api && \
+	pip3 install flask
 	
 # Snapserver, spotify & mopidy
 RUN set -x && \
@@ -58,11 +61,15 @@ RUN set -x && \
     tar -zxvf spotifyd-linux-slim.tar.gz && \
     apt -y remove python3.8-dev pkg-config gcc libffi-dev python3-cairo-dev wget && \
     apt -y autoremove
+	
+	
+	
 
 COPY supervisord.conf /etc/supervisord.conf
 COPY spotifyd.conf /etc/spotifyd.conf
 COPY asound.conf /etc/asound.conf
 COPY mopidy.conf /root/.config/mopidy/mopidy.conf
 COPY bluetooth_main.conf /etc/bluetooth/main.conf
+ADD api /opt/api/
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
