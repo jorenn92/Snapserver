@@ -7,7 +7,8 @@ if [[ ! -z $BLUETOOTH_CLIENT ]]; then
 	else
 		sed -i "s/^defaults.bluealsa.device \".*/defaults.bluealsa.device \"${BLUETOOTH_CLIENT}\"/" /etc/alsa/conf.d/20-bluealsa.conf
 	fi
-
+	
+	kill -9 $(pgrep snapclient)
 	bluetoothctl power on
 
 	echo "scanning devices for 5 seconds.."
