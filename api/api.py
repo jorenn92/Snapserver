@@ -4,7 +4,7 @@ from subprocess import call
 from flask import request
 
 app = flask.Flask(__name__)
-app.config["DEBUG"] = True
+app.config["DEBUG"] = False
 
 
 @app.route('/api/v1/bluetooth/connect', methods=['GET'])
