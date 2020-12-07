@@ -4,7 +4,8 @@
 Bluetooth sink: 
  - Connect to a BT device by calling \<IP-ADRESS\>:8025/api/v1/bluetooth/connect?mac=\<device bluetooth mac address\>
  - Disconnect a BT device by calling \<IP-ADRESS\>:8025/api/v1/bluetooth/connect?mac=\<device bluetooth mac address\>
-While connected a snapclient will spawn playing audio. Only 1 connection is allowed at the same time.
+ 
+ While connected a snapclient will spawn playing audio. Only 1 connection is allowed at the same time.
 
 Bluetooth source: Just connect your BT device and start playing music 
 
