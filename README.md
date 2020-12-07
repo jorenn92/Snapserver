@@ -1,7 +1,8 @@
 # Snapserver
 Snapcast server with mopidy, spotify connect & bluetooth sink/source.
 
-Bluetooth sink: Connect to a BT device by calling <IP-ADRESS>:8025/api/v1/bluetooth/connect?mac=<device bluetooth mac address>
+Bluetooth sink: Connect to a BT device by calling \<IP-ADRESS\>:8025/api/v1/bluetooth/connect?mac=\<device bluetooth mac address\>
+
 Bluetooth source: Just connect your BT device and start playing music 
  
 Note: Harcoded url in spotify_takeover.sh
