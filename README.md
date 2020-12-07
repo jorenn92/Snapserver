@@ -1,5 +1,5 @@
 # Snapserver
-Snapcast server with mopidy, spotify connect & bluetooth sink/source.
+<b>Snapcast server with mopidy, spotify connect & bluetooth sink/source.</b>
 
 Bluetooth sink: 
  - Connect to a BT device by calling \<IP-ADRESS\>:8025/api/v1/bluetooth/connect?mac=\<device bluetooth mac address\>
