@@ -8,9 +8,10 @@ LABEL   Description="Snapcast server with Audio delivered by Bluetooth, Spotify 
 EXPOSE 1704 1705 1780 6600 6680 5555/udp
 
 ENV BLUETOOTH=true
-COPY spotify_takeover.sh /etc/spotify_takeover.sh
-COPY bluetooth.sh /etc/bluetooth.sh
-COPY snapclient.sh /etc/snapclient.sh
+
+ADD api /opt/api/
+COPY scripts/spotify_takeover.sh /etc/spotify_takeover.sh
+COPY scripts/bluetooth.sh /etc/bluetooth.sh
 
 # Bluetooth
 RUN set -x && \
@@ -33,7 +34,7 @@ RUN set -x && \
 	DEBIAN_FRONTEND=noninteractive apt-get clean -y && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y libfdk-aac1 libgio-cil && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y dbus libfdk-aac1 libasound2 libbluetooth3 libbsd0 libglib2.0-0 libsbc1 rsyslog  bluez bluez-tools && \
-	chmod +x /etc/spotify_takeover.sh /etc/bluetooth.sh /etc/snapclient.sh
+	chmod +x /etc/spotify_takeover.sh /etc/bluetooth.sh
 	
 # Snapserver, spotify, mopidy & api
 RUN set -x && \
@@ -63,11 +64,10 @@ RUN set -x && \
 	pip3 install flask && \
 	chmod +x /opt/api/*
 
-COPY supervisord.conf /etc/supervisord.conf
-COPY spotifyd.conf /etc/spotifyd.conf
-COPY asound.conf /etc/asound.conf
-COPY mopidy.conf /root/.config/mopidy/mopidy.conf
-COPY bluetooth_main.conf /etc/bluetooth/main.conf
-ADD api /opt/api/
+COPY conf/supervisord.conf /etc/supervisord.conf
+COPY conf/spotifyd.conf /etc/spotifyd.conf
+COPY conf/asound.conf /etc/asound.conf
+COPY conf/mopidy.conf /root/.config/mopidy/mopidy.conf
+COPY conf/bluetooth_main.conf /etc/bluetooth/main.conf
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
