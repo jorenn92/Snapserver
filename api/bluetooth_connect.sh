@@ -24,6 +24,7 @@ if [[ ! -z $BLUETOOTH_CLIENT ]]; then
 		echo "connecting done.. If the device isn't available set the device in pairing mode and call the api again"
 	else
 		echo "Connecting to $BLUETOOTH_CLIENT"
+		bluetoothctl disconnect $BLUETOOTH_CLIENT
 		bluetoothctl connect $BLUETOOTH_CLIENT
 	fi
 	snapclient -h 127.0.0.1 -s bluealsa
