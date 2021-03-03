@@ -17,7 +17,7 @@ COPY scripts/bluetooth.sh /etc/bluetooth.sh
 RUN set -x && \
     apt-get update -y && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y git automake libtool build-essential pkg-config python-docutils alsa && \
-	DEBIAN_FRONTEND=noninteractive apt-get install -y libasound2-dev libbluetooth-dev libdbus-1-dev libglib2.0-dev libsbc-dev libfdk-aac-dev && \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y libasound2-dev openaptx libldac libbluetooth-dev libdbus-1-dev libglib2.0-dev libsbc-dev libfdk-aac-dev && \
 	mkdir /opt/bluez-alsa && \
 	cd /opt/bluez-alsa && \
 	git clone https://github.com/Arkq/bluez-alsa.git && \
@@ -25,7 +25,7 @@ RUN set -x && \
 	autoreconf --install --force && \ 
 	mkdir build && \
 	cd build && \
-	../configure --enable-aac --enable-msbc --enable-ofono --enable-debug && \
+	../configure --enable-aac --enable-msbc --enable-ldac --enable-aptx-hd --enable-ofono --enable-debug && \
 	make && \
 	make install && \
 	DEBIAN_FRONTEND=noninteractive apt-get remove -y git automake build-essential libtool pkg-config python-docutils && \
