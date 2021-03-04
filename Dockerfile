@@ -33,7 +33,7 @@ RUN set -x && \
 	autoreconf --install --force && \ 
 	mkdir build && \
 	cd build && \
-	../configure --enable-aac --enable-msbc --enable-ldac --enable-aptx-hd --enable-ofono --enable-debug && \
+	../configure --enable-aac --enable-msbc --enable-ldac --enable-ofono --enable-debug && \
 	make && \
 	make install && \
 	DEBIAN_FRONTEND=noninteractive apt-get remove -y git automake build-essential libtool pkg-config python-docutils && \
