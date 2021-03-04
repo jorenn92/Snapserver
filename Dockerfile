@@ -26,13 +26,6 @@ RUN set -x && \
 	mkdir build && cd build && \
 	cmake -DCMAKE_INSTALL_PREFIX=/usr -DINSTALL_LIBDIR=/usr/lib -DLDAC_SOFT_FLOAT=OFF .. && \
 	make DESTDIR=$DEST_DIR install && \
-	mkdir /opt/openaptx/ && \
-	cd /opt/openaptx/ && \
-	git clone https://github.com/Arkq/openaptx.git && \
-	cd openaptx && \
-	mkdir build && cd build && \
-	cmake -DENABLE_DOC=ON -DWITH_FFMPEG=ON -DWITH_SNDFILE=ON .. && \
-	make && make install && \
 	mkdir /opt/bluez-alsa && \
 	cd /opt/bluez-alsa && \
 	git clone https://github.com/Arkq/bluez-alsa.git && \
@@ -59,9 +52,9 @@ RUN set -x && \
     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1 && \
     python3.8 -m pip install --ignore-installed PyGObject && \
     apt -f install -y curl wget libavahi-client3 libavahi-common3 libflac8 libogg0 libopus0 libvorbis0a libvorbisenc2 && \
-    wget https://github.com/$(curl -L https://github.com/badaix/snapcast/releases/latest | grep "snapserver_"  | grep "amd64.deb" | grep "<a href=" | cut -d '"' -f 2) && \
+    wget https://github.com/$(curl -L https://github.com/badaix/snapcast/releases/latest | grep "snapserver_"  | grep "amd64.deb" | grep "<a href=" | cut -d '"' -f 2 | head -n 1) && \
     apt -f install -y ./snapserver* && \
-	wget https://github.com/$(curl -L https://github.com/badaix/snapcast/releases/latest | grep "snapclient_"  | grep "amd64.deb" | grep "<a href=" | cut -d '"' -f 2) && \
+	wget https://github.com/$(curl -L https://github.com/badaix/snapcast/releases/latest | grep "snapclient_"  | grep "amd64.deb" | grep "<a href=" | cut -d '"' -f 2 | head -n 1) && \
     apt -f install -y ./snapclient* && \
     apt -f install -y supervisor mopidy alsa alsa-utils && \
     pip3 install Mopidy-iris && \
