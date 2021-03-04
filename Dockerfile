@@ -28,6 +28,8 @@ RUN set -x && \
 	make DESTDIR=$DEST_DIR install && \
 	mkdir /opt/openaptx/ && \
 	cd /opt/openaptx/ && \
+	git clone https://github.com/Arkq/openaptx.git && \
+	cd openaptx && \
 	mkdir build && cd build && \
 	cmake -DENABLE_DOC=ON -DWITH_FFMPEG=ON -DWITH_SNDFILE=ON .. && \
 	make && make install && \
@@ -53,12 +55,14 @@ RUN set -x && \
 RUN set -x && \
     apt update -y && \
     apt upgrade -y && \
-    apt -f install -y python3.8 python3.8-dev python3-pip snapclient pkg-config gcc libffi-dev libcairo2-dev python3-cairo-dev libgirepository1.0-dev && \
+    apt -f install -y python3.8 python3.8-dev python3-pip pkg-config gcc libffi-dev libcairo2-dev python3-cairo-dev libgirepository1.0-dev && \
     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1 && \
     python3.8 -m pip install --ignore-installed PyGObject && \
     apt -f install -y curl wget libavahi-client3 libavahi-common3 libflac8 libogg0 libopus0 libvorbis0a libvorbisenc2 && \
     wget https://github.com/$(curl -L https://github.com/badaix/snapcast/releases/latest | grep "snapserver_"  | grep "amd64.deb" | grep "<a href=" | cut -d '"' -f 2) && \
     apt -f install -y ./snapserver* && \
+	wget https://github.com/$(curl -L https://github.com/badaix/snapcast/releases/latest | grep "snapclient_"  | grep "amd64.deb" | grep "<a href=" | cut -d '"' -f 2) && \
+    apt -f install -y ./snapclient* && \
     apt -f install -y supervisor mopidy alsa alsa-utils && \
     pip3 install Mopidy-iris && \
     pip3 install Mopidy-tunein && \
