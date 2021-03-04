@@ -18,6 +18,19 @@ RUN set -x && \
     apt-get update -y && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y git automake libtool build-essential pkg-config python-docutils alsa && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y libasound2-dev libbluetooth-dev libdbus-1-dev libglib2.0-dev libsbc-dev libfdk-aac-dev && \
+	mkdir /opt/libldac && \
+	cd /opt/libldac && \
+	git clone https://github.com/EHfive/ldacBT.git && \
+	cd ldacBT && \
+	git submodule update --init && \
+	mkdir build && cd build && \
+	cmake -DCMAKE_INSTALL_PREFIX=/usr -DINSTALL_LIBDIR=/usr/lib -DLDAC_SOFT_FLOAT=OFF .. && \
+	make DESTDIR=$DEST_DIR install && \
+	mkdir /opt/openaptx/ && \
+	cd /opt/openaptx/ && \
+	mkdir build && cd build && \
+	cmake -DENABLE_DOC=ON -DWITH_FFMPEG=ON -DWITH_SNDFILE=ON .. && \
+	make && make install && \
 	mkdir /opt/bluez-alsa && \
 	cd /opt/bluez-alsa && \
 	git clone https://github.com/Arkq/bluez-alsa.git && \
@@ -25,7 +38,7 @@ RUN set -x && \
 	autoreconf --install --force && \ 
 	mkdir build && \
 	cd build && \
-	../configure --enable-aac --enable-msbc --enable-ofono --enable-debug && \
+	../configure --enable-aac --enable-msbc --enable-ldac --enable-aptx-hd --enable-ofono --enable-debug && \
 	make && \
 	make install && \
 	DEBIAN_FRONTEND=noninteractive apt-get remove -y git automake build-essential libtool pkg-config python-docutils && \
