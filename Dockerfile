@@ -16,7 +16,7 @@ COPY scripts/bluetooth.sh /etc/bluetooth.sh
 # Bluetooth
 RUN set -x && \
     apt-get update -y && \
-	DEBIAN_FRONTEND=noninteractive apt-get install -y git automake libtool build-essential pkg-config python-docutils alsa && \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y git automake cmake libtool build-essential pkg-config python-docutils alsa && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y libasound2-dev libbluetooth-dev libdbus-1-dev libglib2.0-dev libsbc-dev libfdk-aac-dev && \
 	mkdir /opt/libldac && \
 	cd /opt/libldac && \
