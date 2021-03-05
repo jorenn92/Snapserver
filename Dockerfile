@@ -48,7 +48,7 @@ RUN set -x && \
 RUN set -x && \
     apt update -y && \
     apt upgrade -y && \
-    apt -f install -y python3.8 python3.8-dev python3-pip pkg-config gcc libffi-dev libcairo2-dev python3-cairo-dev libgirepository1.0-dev && \
+    apt -f install -y git rustc cargo libasound2-dev libssl-dev pkg-config python3.8 python3.8-dev python3-pip pkg-config gcc libffi-dev libcairo2-dev python3-cairo-dev libgirepository1.0-dev && \
     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1 && \
     python3.8 -m pip install --ignore-installed PyGObject && \
     apt -f install -y curl wget libavahi-client3 libavahi-common3 libflac8 libogg0 libopus0 libvorbis0a libvorbisenc2 && \
@@ -65,9 +65,14 @@ RUN set -x && \
     mkdir -p /root/.config/mopidy && \
     mkdir -p /opt/spotifyd && \
     cd /opt/spotifyd && \
-    wget https://github.com/$(curl -L https://github.com/Spotifyd/spotifyd/releases/latest | grep "spotifyd-linux-full.tar.gz"  | grep "<a href=" | cut -d '"' -f 2) && \
-    tar -zxvf spotifyd-linux-slim.tar.gz && \
-    apt -y remove python3.8-dev pkg-config gcc libffi-dev python3-cairo-dev wget && \
+	git clone https://github.com/Spotifyd/spotifyd.git && \
+	cd spotifyd && \
+	cargo build --release --no-default-features --features alsa_backend && \
+	cd ../ && \
+	mv target/release/spotifyd temp && \
+	rm -rf spotifyd && \
+	mv temp spotifyd && \
+    apt -y remove git rustc cargo libasound2-dev libssl-dev pkg-config python3.8-dev pkg-config gcc libffi-dev python3-cairo-dev wget && \
     apt -y autoremove && \
 	pip3 install flask && \
 	chmod +x /opt/api/*
