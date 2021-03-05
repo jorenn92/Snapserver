@@ -48,7 +48,7 @@ RUN set -x && \
 RUN set -x && \
     apt update -y && \
     apt upgrade -y && \
-    apt -f install -y git rustc cargo libasound2-dev libssl-dev pkg-config python3.8 python3.8-dev python3-pip pkg-config gcc libffi-dev libcairo2-dev python3-cairo-dev libgirepository1.0-dev && \
+    apt -f install -y libusb-dev libdbus-1-dev libglib2.0-dev libudev-dev libical-dev libreadline-dev git rustc cargo libasound2-dev libssl-dev pkg-config python3.8 python3.8-dev python3-pip pkg-config gcc libffi-dev libcairo2-dev python3-cairo-dev libgirepository1.0-dev && \
     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1 && \
     python3.8 -m pip install --ignore-installed PyGObject && \
     apt -f install -y curl wget libavahi-client3 libavahi-common3 libflac8 libogg0 libopus0 libvorbis0a libvorbisenc2 && \
@@ -72,6 +72,9 @@ RUN set -x && \
 	mv spotifyd/target/release/spotifyd temp && \
 	rm -rf spotifyd && \
 	mv temp spotifyd && \
+	# bluez dl on hold because of unmet dependencies
+	#wget http://nl.archive.ubuntu.com/ubuntu/pool/main/b/bluez/$(curl -L http://nl.archive.ubuntu.com/ubuntu/pool/main/b/bluez/ | grep 'bluez_' | grep 'amd64.deb' | awk -F  '<a href='  '{print $2}' | cut -d '"' -f 2 | tail -n 1) && \
+	#apt install ./bluez_*.deb && \
     apt -y remove git rustc cargo libasound2-dev libssl-dev pkg-config python3.8-dev pkg-config gcc libffi-dev python3-cairo-dev wget && \
     apt -y autoremove && \
 	pip3 install flask && \
@@ -82,5 +85,5 @@ COPY conf/spotifyd.conf /etc/spotifyd.conf
 COPY conf/asound.conf /etc/asound.conf
 COPY conf/mopidy.conf /root/.config/mopidy/mopidy.conf
 COPY conf/bluetooth_main.conf /etc/bluetooth/main.conf
-
+|
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
