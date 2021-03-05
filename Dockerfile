@@ -69,7 +69,7 @@ RUN set -x && \
 	cd spotifyd && \
 	cargo build --release --no-default-features --features alsa_backend && \
 	cd ../ && \
-	mv target/release/spotifyd temp && \
+	mv spotifyd/target/release/spotifyd temp && \
 	rm -rf spotifyd && \
 	mv temp spotifyd && \
     apt -y remove git rustc cargo libasound2-dev libssl-dev pkg-config python3.8-dev pkg-config gcc libffi-dev python3-cairo-dev wget && \
