@@ -60,6 +60,7 @@ RUN set -x && \
     pip3 install Mopidy-iris && \
     pip3 install Mopidy-tunein && \
     pip3 install Mopidy-Mopify && \
+    pip3 install Mopidy-Spotify && \
     ldconfig /usr/local/lib && \
     usermod -a -G audio root && \
     mkdir -p /root/.config/mopidy && \
